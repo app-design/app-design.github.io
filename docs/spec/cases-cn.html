@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An enterprise-class UI design language and React-based implementation">
+    <meta name="description" content="A set of high-quality React components">
+    <meta name="description" content="One of best React UI library for enterprise background">
+    <title>App Design - An App Design Framework</title>
+    <script>
+    (function() {
+      function isLocalStorageNameSupported() {
+        var testKey = 'test';
+        var storage = window.localStorage;
+        try {
+          storage.setItem(testKey, '1');
+          storage.removeItem(testKey);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
+      var pathname = location.pathname;
+
+      function isZhCN(pathname) {
+        return /-cn\/?$/.test(pathname);
+      }
+      function getLocalizedPathname(path, zhCN) {
+        var pathname = path.startsWith('/') ? path : '/' + path;
+        if (!zhCN) { // to enUS
+          return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
+        } else if (pathname === '/') {
+          return '/index-cn';
+        } else if (pathname.endsWith('/')) {
+          return pathname.replace(/\/$/, '-cn/');
+        }
+        return pathname + '-cn';
+      }
+
+      // 兼容旧的 URL， `?locale=...`
+      var queryString = location.search;
+      if (queryString) {
+        var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
+        if (isZhCNConfig && !isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, isZhCNConfig)
+        }
+      }
+
+      // 首页无视链接里面的语言设置 https://github.com/ant-design/ant-design/issues/4552
+      if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
+        var lang = (window.localStorage && localStorage.getItem('locale')) || (navigator.language.toLowerCase() === 'zh-cn' ? 'zh-CN' : 'en-US');
+        // safari is 'zh-cn', while other browser is 'zh-CN';
+        if ((lang === 'zh-CN') !== isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+        }
+      }
+      document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
+    })()
+    </script>
+    <link rel="icon" href="https://app-design.github.io/s/logo_102.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.cnpmjs.org/css?family=Lato:400,700|Raleway"/>
+    <link rel="stylesheet" type="text/css" href="https://app-design.github.io/s/antd.css"/>
+    <link rel="stylesheet" type="text/css" href="/index.css"/>
+    <style id="nprogress-style">
+      #nprogress { display: none }
+    </style>
+    <!--[if lte IE 10]>
+      <script
+        src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+    <![endif]-->
+    <script>
+    if (!window.Intl) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.js,locale-data/jsonp/en.js,locale-data/jsonp/zh.js">' + '<' + '/script>');
+    }
+    if (!window.Promise) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
+    }
+    // Enable Google Analytics
+    if (!location.port) {
+      /* eslint-disable */
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+          }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+      ga('create', 'UA-72788897-1', 'auto');
+      ga('send', 'pageview');
+      /* eslint-enable */
+    }
+    </script>
+    <!-- Hotjar Tracking Code for ant.design -->
+    <script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:473408,hjsv:5};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+  </head>
+  <body>
+    <div id="react-content">
+      <div class="page-wrapper" data-reactroot="" data-reactid="1" data-react-checksum="528484764"><header id="header" class="clearfix" data-reactid="2"><div class="ant-row" data-reactid="3"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-5 ant-col-lg-4" data-reactid="4"><a id="logo" href="/index-cn" data-reactid="5"><img alt="logo" src="https://app-design.github.io/s/logo.svg" data-reactid="6"/><span data-reactid="7">App Design</span></a></div><div class="ant-col-xs-0 ant-col-sm-0 ant-col-md-19 ant-col-lg-20" data-reactid="8"><div id="search-box" data-reactid="9"><div class="ant-select ant-select-combobox ant-select-enabled" data-reactid="10"><div class="ant-select-selection
+            ant-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" data-reactid="11"><div class="ant-select-selection__rendered" data-reactid="12"><div style="display:block;user-select:none;-webkit-user-select:none;" unselectable="unselectable" class="ant-select-selection__placeholder" data-reactid="13">搜索组件...</div><ul data-reactid="14"><li class="ant-select-search ant-select-search--inline" data-reactid="15"><div class="ant-select-search__field__wrap" data-reactid="16"><input value="" class="ant-select-search__field" data-reactid="17"/><span class="ant-select-search__field__mirror" data-reactid="18"><!-- react-text: 19 --><!-- /react-text --><!-- react-text: 20 --> <!-- /react-text --></span></div></li></ul></div><span class="ant-select-arrow" style="user-select:none;-webkit-user-select:none;" unselectable="unselectable" data-reactid="21"><b data-reactid="22"></b></span></div></div></div><button type="button" class="ant-btn ant-btn-ghost ant-btn-sm lang" data-reactid="23"><span data-reactid="24">EN</span></button><div class="ant-select-sm version ant-select ant-select-enabled" data-reactid="25"><div class="ant-select-selection
+            ant-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0" data-reactid="26"><div class="ant-select-selection__rendered" data-reactid="27"><div class="ant-select-selection-selected-value" title="0.1.0" style="display:block;opacity:1;" data-reactid="28">0.1.0</div></div><span class="ant-select-arrow" style="user-select:none;-webkit-user-select:none;" unselectable="unselectable" data-reactid="29"><b data-reactid="30"></b></span></div></div><ul class="ant-menu ant-menu-horizontal  ant-menu-light ant-menu-root" role="menu" aria-activedescendant="" id="nav" tabindex="0" data-reactid="31"><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="32"><a href="/index-cn" data-reactid="33"><span data-reactid="34">首页</span></a></li><li class="ant-menu-item-selected ant-menu-item" role="menuitem" aria-selected="true" data-reactid="35"><a href="/docs/spec/introduce-cn" data-reactid="36"><span data-reactid="37">指引</span></a></li><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="38"><a href="/docs/react/introduce-cn" data-reactid="39"><span data-reactid="40">组件</span></a></li><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="41"><a href="/docs/pattern/navigation-cn" data-reactid="42"><span data-reactid="43">模式</span></a></li><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="44"><a href="/docs/contribution/00-git-guide-cn" data-reactid="45"><span data-reactid="46">贡献</span></a></li><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="47"><a href="/docs/resource/download-cn" data-reactid="48"><span data-reactid="49">资源</span></a></li></ul></div></div></header><div class="main-wrapper" data-reactid="50"><div class="ant-row" data-reactid="51"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6 ant-col-lg-4" data-reactid="52"><ul class="ant-menu ant-menu-inline aside-container ant-menu-light ant-menu-root" role="menu" aria-activedescendant="" tabindex="0" data-reactid="53"><li style="padding-left:24px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="54"><a href="/docs/spec/introduce-cn" data-reactid="55">App Design</a></li><li style="padding-left:24px;" class="ant-menu-item-selected ant-menu-item" role="menuitem" aria-selected="true" data-reactid="56"><a href="/docs/spec/cases-cn" data-reactid="57">实践案例</a></li><li class="ant-menu-submenu-inline ant-menu-submenu-open ant-menu-submenu" data-reactid="58"><div style="padding-left:24px;" class="ant-menu-submenu-title" aria-expanded="true" aria-owns="设计指引$Menu" aria-haspopup="true" data-reactid="59"><h4 data-reactid="60">设计指引</h4></div><ul class="ant-menu ant-menu-inline  ant-menu-sub" role="menu" aria-activedescendant="" id="设计指引$Menu" data-reactid="61"><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="62"><a href="/docs/spec/00-principle-cn" data-reactid="63">设计原则</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="64"><a href="/docs/spec/01-template-cn" data-reactid="65">项目模板</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="66"><a href="/docs/spec/02-splash-cn" data-reactid="67">闪屏</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="68"><a href="/docs/spec/03-guide-cn" data-reactid="69">引导页</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="70"><a href="/docs/spec/04-login-cn" data-reactid="71">登录</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="72"><a href="/docs/spec/05-navigation-cn" data-reactid="73">导航</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="74"><a href="/docs/spec/06-homepage-cn" data-reactid="75">首页</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="76"><a href="/docs/spec/07-listview-cn" data-reactid="77">列表页面</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="78"><a href="/docs/spec/08-detail-cn" data-reactid="79">详情页面</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="80"><a href="/docs/spec/09-about-cn" data-reactid="81">关于</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="82"><a href="/docs/spec/10-network-cn" data-reactid="83">网络访问</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="84"><a href="/docs/spec/11-security-cn" data-reactid="85">安全</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="86"><a href="/docs/spec/12-upgrade-cn" data-reactid="87">版本更新</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="88"><a href="/docs/spec/13-push-cn" data-reactid="89">消息推送</a></li></ul></li></ul></div><div class="main-container ant-col-xs-24 ant-col-sm-24 ant-col-md-18 ant-col-lg-20" data-reactid="90"><div class="ant-row" data-reactid="91"><div class="ant-col-20" data-reactid="92"><article class="markdown" data-reactid="93"><h1 data-reactid="94"><!-- react-text: 95 -->实践案例<!-- /react-text --><a class="edit-button" href="https://github.com/ant-design/ant-design/edit/master/docs/spec/cases.zh-CN.md" data-reactid="96"><i class="anticon anticon-edit" data-reactid="97"></i></a></h1><section class="markdown" data-reactid="98"><p data-reactid="99"><!-- react-text: 100 -->最佳实践<!-- /react-text --></p></section><section class="markdown" data-reactid="101"><h2 id="高伟达新信贷app" data-reactid="102"><span data-reactid="103"><!-- react-text: 104 -->高伟达新信贷app<!-- /react-text --></span><a href="#高伟达新信贷app" class="anchor" data-reactid="105">#</a></h2><div class="preview-image-boxes clearfix preview-image-boxes-with-carousel" data-reactid="106"><div class="preview-image-box" data-reactid="107"><div class="preview-image-wrapper" data-reactid="108"><img class="preview-img" src="https://app-design.github.io/s/xinxindai-01.png" data-reactid="109"/></div><div class="preview-image-title" data-reactid="110"></div><div class="preview-image-description" data-reactid="111"></div><!-- react-empty: 112 --></div></div><p data-reactid="113"><!-- react-text: 114 -->高伟达新一代信贷系统的业务目标是建立信贷风险预警阶段的便捷的全流程跟踪和分析处理过程。  <!-- /react-text --></p><p data-reactid="115"><!-- react-text: 116 -->主要功能包括：  <!-- /react-text --></p><ul data-reactid="117"><li data-reactid="118"><p data-reactid="119"><!-- react-text: 120 -->app首页<!-- /react-text --></p></li><li data-reactid="121"><p data-reactid="122"><!-- react-text: 123 -->客户查询管理<!-- /react-text --></p></li><li data-reactid="124"><p data-reactid="125"><!-- react-text: 126 -->预警信号列表和处理<!-- /react-text --></p></li><li data-reactid="127"><p data-reactid="128"><!-- react-text: 129 -->待办工作事项列表和处理<!-- /react-text --></p></li><li data-reactid="130"><p data-reactid="131"><!-- react-text: 132 -->工作日历<!-- /react-text --></p></li><li data-reactid="133"><p data-reactid="134"><!-- react-text: 135 -->跟踪事项处理<!-- /react-text --></p></li><li data-reactid="136"><p data-reactid="137"><!-- react-text: 138 -->预警对象管理<!-- /react-text --></p></li><li data-reactid="139"><p data-reactid="140"><!-- react-text: 141 -->预警分析报表展现和分析处理<!-- /react-text --></p></li></ul><hr data-reactid="142"/><h2 id="中信集团i协同app" data-reactid="143"><span data-reactid="144"><!-- react-text: 145 -->中信集团i协同app<!-- /react-text --></span><a href="#中信集团i协同app" class="anchor" data-reactid="146">#</a></h2><div class="preview-image-boxes clearfix preview-image-boxes-with-carousel" data-reactid="147"><div class="preview-image-box" data-reactid="148"><div class="preview-image-wrapper" data-reactid="149"><img class="preview-img" src="https://app-design.github.io/s/ixietong-01.jpg" data-reactid="150"/></div><div class="preview-image-title" data-reactid="151"></div><div class="preview-image-description" data-reactid="152"></div><!-- react-empty: 153 --></div></div><p data-reactid="154"><!-- react-text: 155 -->在集团层面搭建中信集团业务协同平台，利用信息化手段促进子公司间的各类业务信息的共享与交流，打通信息鸿沟。统一规划、分步实施，建设完成集协同门户、移动客户端应用为一体的“集团业务协同信息共享与交流平台”，为各级协同管理人员和一线业务人员提供及时、方便地信息查询和交流工具，满足用户随时随地查询各类常用业务信息的需求，并提供重大项目及产品服务信息实时共享、跨公司及跨行业圈子热点交流互动，挖掘业务协作机会，充分发挥集团多元化的业务特色，促进集团内业务协同。<!-- /react-text --></p><ul data-reactid="156"><li data-reactid="157"><p data-reactid="158"><!-- react-text: 159 -->商机共享<!-- /react-text --></p></li><li data-reactid="160"><p data-reactid="161"><!-- react-text: 162 -->业务动态<!-- /react-text --></p></li><li data-reactid="163"><p data-reactid="164"><!-- react-text: 165 -->需求对接<!-- /react-text --></p></li><li data-reactid="166"><p data-reactid="167"><!-- react-text: 168 -->中信百科<!-- /react-text --></p></li><li data-reactid="169"><p data-reactid="170"><!-- react-text: 171 -->今日要闻<!-- /react-text --></p></li><li data-reactid="172"><p data-reactid="173"><!-- react-text: 174 -->先锋榜<!-- /react-text --></p></li><li data-reactid="175"><p data-reactid="176"><!-- react-text: 177 -->能力、需求发布<!-- /react-text --></p></li><li data-reactid="178"><p data-reactid="179"><!-- react-text: 180 -->协同助手<!-- /react-text --></p></li></ul><hr data-reactid="181"/><p data-reactid="182"><!-- react-text: 183 -->更多 <!-- /react-text --><a title="target=_blank" href="http://27.154.58.94:32445/xiamen-lab/app-design/issues/1" data-reactid="184"><!-- react-text: 185 -->社区案例<!-- /react-text --></a><!-- react-text: 186 -->。<!-- /react-text --></p><style data-reactid="187">
+.preview-image-boxes {
+  margin-top: -36px;
+}
+.preview-image-wrapper {
+  padding: 0;
+  background: #fff;
+}
+.toc {
+  display: none;
+}
+</style></section><section class="markdown api-container" data-reactid="188"></section></article></div><div class="ant-col-3 ant-col-offset-1" data-reactid="189"><div data-reactid="190"><div class="" data-reactid="191"><div class="ant-anchor-wrapper toc-anchor" data-reactid="192"><div class="ant-anchor" data-reactid="193"><div class="ant-anchor-ink" data-reactid="194"><span class="ant-anchor-ink-ball animated" data-reactid="195"></span></div><div class="ant-anchor-link" data-reactid="196"><a class="ant-anchor-link-title" href="#高伟达新信贷app" title="高伟达新信贷app" data-reactid="197">高伟达新信贷app</a></div><div class="ant-anchor-link" data-reactid="198"><a class="ant-anchor-link-title" href="#中信集团i协同app" title="中信集团i协同app" data-reactid="199">中信集团i协同app</a></div></div></div></div></div></div></div></div></div><div class="ant-row" data-reactid="200"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-18 ant-col-md-offset-6 ant-col-lg-20 ant-col-lg-offset-4" data-reactid="201"><section class="prev-next-nav" data-reactid="202"><a class="prev-page" href="/docs/spec/introduce-cn" data-reactid="203">App Design</a><a class="next-page" href="/docs/spec/00-principle-cn" data-reactid="204">设计原则</a></section></div></div></div><footer id="footer" data-reactid="205"><ul data-reactid="206"><li data-reactid="207"><h2 data-reactid="208"><i class="anticon anticon-github" data-reactid="209"></i><!-- react-text: 210 --> 高伟达Git私服<!-- /react-text --></h2><div data-reactid="211"><a target="_blank " href="http://27.154.58.94:32445/xiamen-lab/app-design" data-reactid="212"><span data-reactid="213">源码仓库</span></a></div><div data-reactid="214"><a target="_blank " href="mailto:tangyuanzhao@git.com.cn?subject=申请注册git私服用户&amp;body=姓名：%0D%0A部门：%0D%0A电话：%0D%0A" data-reactid="215"><span data-reactid="216">申请git私服用户</span></a></div></li><li data-reactid="217"><h2 data-reactid="218"><i class="anticon anticon-link" data-reactid="219"></i><!-- react-text: 220 --> <!-- /react-text --><span data-reactid="221">相关站点</span></h2><div data-reactid="222"><a href="http://www.git.com.cn/" data-reactid="223"><span data-reactid="224">高伟达股份有限公司官网</span></a></div></li><li data-reactid="225"><h2 data-reactid="226"><i class="anticon anticon-customer-service" data-reactid="227"></i><!-- react-text: 228 --> <!-- /react-text --><span data-reactid="229">社区</span></h2><div data-reactid="230"><a href="/changelog-cn" data-reactid="231"><span data-reactid="232">更新记录</span></a></div><div data-reactid="233"><a target="_blank" rel="noopener noreferrer" href="http://27.154.58.94:32445/xiamen-lab/app-design/wiki/FAQ" data-reactid="234"><span data-reactid="235">常见问题</span></a></div><div data-reactid="236"><a target="_blank" rel="noopener noreferrer" href="https://gitter.im/app-design/app-design" data-reactid="237"><span data-reactid="238">在线讨论 (中文)</span></a></div><div data-reactid="239"><a target="_blank" rel="noopener noreferrer" href="http://27.154.58.94:32445/xiamen-lab/app-design/issues/new/" data-reactid="240"><span data-reactid="241">报告 Bug</span></a></div><div data-reactid="242"><a target="_blank" rel="noopener noreferrer" href="http://27.154.58.94:32445/xiamen-lab/app-design/issues" data-reactid="243"><span data-reactid="244">讨论列表</span></a></div><div data-reactid="245"><a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/questions/tagged/appdesign" data-reactid="246"><span data-reactid="247">StackOverflow</span></a></div><div data-reactid="248"><a target="_blank" rel="noopener noreferrer" href="https://segmentfault.com/t/appdesign" data-reactid="249"><span data-reactid="250">SegmentFault</span></a></div></li><li data-reactid="251"><h2 data-reactid="252"><!-- react-text: 253 -->Copyright © <!-- /react-text --><!-- react-text: 254 -->2017<!-- /react-text --></h2><div data-reactid="255"><span data-reactid="256">高伟达研发中心厦门分中心出品</span></div></li></ul></footer></div>
+    </div>
+    <script src="/common.js"></script>
+    <script src="/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An enterprise-class UI design language and React-based implementation">
+    <meta name="description" content="A set of high-quality React components">
+    <meta name="description" content="One of best React UI library for enterprise background">
+    <title>App Design - An App Design Framework</title>
+    <script>
+    (function() {
+      function isLocalStorageNameSupported() {
+        var testKey = 'test';
+        var storage = window.localStorage;
+        try {
+          storage.setItem(testKey, '1');
+          storage.removeItem(testKey);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+      // 优先级提高到所有静态资源的前面，语言不对，加载其他静态资源没意义
+      var pathname = location.pathname;
+
+      function isZhCN(pathname) {
+        return /-cn\/?$/.test(pathname);
+      }
+      function getLocalizedPathname(path, zhCN) {
+        var pathname = path.startsWith('/') ? path : '/' + path;
+        if (!zhCN) { // to enUS
+          return /\/?index-cn/.test(pathname) ? '/' : pathname.replace('-cn', '');
+        } else if (pathname === '/') {
+          return '/index-cn';
+        } else if (pathname.endsWith('/')) {
+          return pathname.replace(/\/$/, '-cn/');
+        }
+        return pathname + '-cn';
+      }
+
+      // 兼容旧的 URL， `?locale=...`
+      var queryString = location.search;
+      if (queryString) {
+        var isZhCNConfig = queryString.indexOf('zh-CN') > -1;
+        if (isZhCNConfig && !isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, isZhCNConfig)
+        }
+      }
+
+      // 首页无视链接里面的语言设置 https://github.com/ant-design/ant-design/issues/4552
+      if (isLocalStorageNameSupported() && (pathname === '/' || pathname === '/index-cn')) {
+        var lang = (window.localStorage && localStorage.getItem('locale')) || (navigator.language.toLowerCase() === 'zh-cn' ? 'zh-CN' : 'en-US');
+        // safari is 'zh-cn', while other browser is 'zh-CN';
+        if ((lang === 'zh-CN') !== isZhCN(pathname)) {
+          location.pathname = getLocalizedPathname(pathname, lang === 'zh-CN');
+        }
+      }
+      document.documentElement.className += isZhCN(pathname) ? 'zh-cn' : 'en-us';
+    })()
+    </script>
+    <link rel="icon" href="https://app-design.github.io/s/logo_102.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.cnpmjs.org/css?family=Lato:400,700|Raleway"/>
+    <link rel="stylesheet" type="text/css" href="https://app-design.github.io/s/antd.css"/>
+    <link rel="stylesheet" type="text/css" href="/index.css"/>
+    <style id="nprogress-style">
+      #nprogress { display: none }
+    </style>
+    <!--[if lte IE 10]>
+      <script
+        src="https://as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,media-match/2.0.2/media.match.min.js"></script>
+    <![endif]-->
+    <script>
+    if (!window.Intl) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/intl/1.0.1/??Intl.js,locale-data/jsonp/en.js,locale-data/jsonp/zh.js">' + '<' + '/script>');
+    }
+    if (!window.Promise) {
+      document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' + '>' + '<' + '/' + 'script>');
+    }
+    // Enable Google Analytics
+    if (!location.port) {
+      /* eslint-disable */
+      (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+          }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+          m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+      })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+      ga('create', 'UA-72788897-1', 'auto');
+      ga('send', 'pageview');
+      /* eslint-enable */
+    }
+    </script>
+    <!-- Hotjar Tracking Code for ant.design -->
+    <script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:473408,hjsv:5};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+  </head>
+  <body>
+    <div id="react-content">
+      <div class="page-wrapper" data-reactroot="" data-reactid="1" data-react-checksum="-1786046083"><header id="header" class="clearfix" data-reactid="2"><div class="ant-row" data-reactid="3"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-5 ant-col-lg-4" data-reactid="4"><a id="logo" href="/" data-reactid="5"><img alt="logo" src="https://app-design.github.io/s/logo.svg" data-reactid="6"/><span data-reactid="7">App Design</span></a></div><div class="ant-col-xs-0 ant-col-sm-0 ant-col-md-19 ant-col-lg-20" data-reactid="8"><div id="search-box" data-reactid="9"><div class="ant-select ant-select-combobox ant-select-enabled" data-reactid="10"><div class="ant-select-selection
+            ant-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" data-reactid="11"><div class="ant-select-selection__rendered" data-reactid="12"><div style="display:block;user-select:none;-webkit-user-select:none;" unselectable="unselectable" class="ant-select-selection__placeholder" data-reactid="13">Search Components...</div><ul data-reactid="14"><li class="ant-select-search ant-select-search--inline" data-reactid="15"><div class="ant-select-search__field__wrap" data-reactid="16"><input value="" class="ant-select-search__field" data-reactid="17"/><span class="ant-select-search__field__mirror" data-reactid="18"><!-- react-text: 19 --><!-- /react-text --><!-- react-text: 20 --> <!-- /react-text --></span></div></li></ul></div><span class="ant-select-arrow" style="user-select:none;-webkit-user-select:none;" unselectable="unselectable" data-reactid="21"><b data-reactid="22"></b></span></div></div></div><button type="button" class="ant-btn ant-btn-ghost ant-btn-sm lang" data-reactid="23"><span data-reactid="24">中文</span></button><div class="ant-select-sm version ant-select ant-select-enabled" data-reactid="25"><div class="ant-select-selection
+            ant-select-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0" data-reactid="26"><div class="ant-select-selection__rendered" data-reactid="27"><div class="ant-select-selection-selected-value" title="0.1.0" style="display:block;opacity:1;" data-reactid="28">0.1.0</div></div><span class="ant-select-arrow" style="user-select:none;-webkit-user-select:none;" unselectable="unselectable" data-reactid="29"><b data-reactid="30"></b></span></div></div><ul class="ant-menu ant-menu-horizontal  ant-menu-light ant-menu-root" role="menu" aria-activedescendant="" id="nav" tabindex="0" data-reactid="31"><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="32"><a href="/" data-reactid="33"><span data-reactid="34">Home</span></a></li><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="35"><a href="/docs/spec/introduce" data-reactid="36"><span data-reactid="37">Guidlines</span></a></li><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="38"><a href="/docs/react/introduce" data-reactid="39"><span data-reactid="40">Components</span></a></li><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="41"><a href="/docs/pattern/navigation" data-reactid="42"><span data-reactid="43">Patterns</span></a></li><li class="ant-menu-item-selected ant-menu-item" role="menuitem" aria-selected="true" data-reactid="44"><a href="/docs/contribution/00-git-guide" data-reactid="45"><span data-reactid="46">Contribute</span></a></li><li class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="47"><a href="/docs/resource/download" data-reactid="48"><span data-reactid="49">Resources</span></a></li></ul></div></div></header><div class="main-wrapper" data-reactid="50"><div class="ant-row" data-reactid="51"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6 ant-col-lg-4" data-reactid="52"><ul class="ant-menu ant-menu-inline aside-container ant-menu-light ant-menu-root" role="menu" aria-activedescendant="" tabindex="0" data-reactid="53"><li style="padding-left:24px;" class="ant-menu-item-selected ant-menu-item" role="menuitem" aria-selected="true" data-reactid="54"><a href="/docs/contribution/00-git-guide" data-reactid="55">git guide</a></li><li class="ant-menu-submenu-inline ant-menu-submenu-open ant-menu-submenu" data-reactid="56"><div style="padding-left:24px;" class="ant-menu-submenu-title" aria-expanded="true" aria-owns="协作规范$Menu" aria-haspopup="true" data-reactid="57"><h4 data-reactid="58">协作规范</h4></div><ul class="ant-menu ant-menu-inline  ant-menu-sub" role="menu" aria-activedescendant="" id="协作规范$Menu" data-reactid="59"><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="60"><a href="/docs/contribution/01-product" data-reactid="61">Product Collaboration</a></li><li style="padding-left:48px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="62"><a href="/docs/contribution/02-contribute" data-reactid="63">Community collaboration</a></li></ul></li><li style="padding-left:24px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="64"><a href="/docs/contribution/03-issue" data-reactid="65">use Issue</a></li><li style="padding-left:24px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="66"><a href="/docs/contribution/04-node-semver" data-reactid="67">Node Semver</a></li><li style="padding-left:24px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="68"><a href="/flow/index.html" target="_blank" rel="noopener noreferrer" class="menu-item-link-outside" data-reactid="69"><!-- react-text: 70 -->理解GitHub Flow<!-- /react-text --><!-- react-text: 71 --> <!-- /react-text --><i class="anticon anticon-export" data-reactid="72"></i></a></li><li style="padding-left:24px;" class="ant-menu-item" role="menuitem" aria-selected="false" data-reactid="73"><a href="/docs/contribution/99-name-explanation" data-reactid="74">Name explanation</a></li></ul></div><div class="main-container ant-col-xs-24 ant-col-sm-24 ant-col-md-18 ant-col-lg-20" data-reactid="75"><div class="ant-row" data-reactid="76"><div class="ant-col-20" data-reactid="77"><article class="markdown" data-reactid="78"><h1 data-reactid="79"><!-- react-text: 80 -->git guide<!-- /react-text --><a class="edit-button" href="https://github.com/ant-design/ant-design/edit/master/docs/contribution/00-git-guide.md" data-reactid="81"><i class="anticon anticon-edit" data-reactid="82"></i></a></h1><section class="markdown" data-reactid="83"><h1 id="介绍" data-reactid="84"><span data-reactid="85"><!-- react-text: 86 -->介绍<!-- /react-text --></span><a href="#介绍" class="anchor" data-reactid="87">#</a></h1><p data-reactid="88"><!-- react-text: 89 -->这是高伟达移动团队的 Git 分支管理规范。每个人对工具的使用往往各有偏好，各种方法各有利弊，无所谓对错。但涉及团队协作的方面需要有一些一致的规范，所以请大家务必遵守。<!-- /react-text --></p><p data-reactid="90"><!-- react-text: 91 -->除了一致性之外，这个规范有以下几个目的：<!-- /react-text --></p><ul data-reactid="92"><li data-reactid="93"><p data-reactid="94"><!-- react-text: 95 -->建立产品开源协作流程和规范；<!-- /react-text --></p></li><li data-reactid="96"><p data-reactid="97"><!-- react-text: 98 -->帮助产品和社区用户取得共赢；<!-- /react-text --></p></li><li data-reactid="99"><p data-reactid="100"><!-- react-text: 101 -->为高伟达的开源事业作出有益的尝试。<!-- /react-text --><br data-reactid="102"/><!-- react-text: 103 -->  <!-- /react-text --></p></li></ul><h1 id="分支管理规范" data-reactid="104"><span data-reactid="105"><!-- react-text: 106 -->分支管理规范<!-- /react-text --></span><a href="#分支管理规范" class="anchor" data-reactid="107">#</a></h1><p data-reactid="108"><a href="http://27.154.58.94:32445/xiamen-lab/app-design" data-reactid="109"><!-- react-text: 110 -->app-design<!-- /react-text --></a><!-- react-text: 111 --> 托管在高伟达内部 git 仓库 Gogs 上。产品团队和项目实施团队，以 Gogs 平台为依托，根据协同模式的不同，分别使用以下不同的分支管理规范最佳实践：<!-- /react-text --></p><ul data-reactid="112"><li data-reactid="113"><p data-reactid="114"><!-- react-text: 115 -->产品团队：<!-- /react-text --><a href="/docs/contribution/01-product" data-reactid="116">产品协作规范</a></p></li><li data-reactid="117"><p data-reactid="118"><!-- react-text: 119 -->实施团队：<!-- /react-text --><a href="/docs/contribution/02-contribute" data-reactid="120">开源协作规范</a></p></li></ul><h1 id="协作关系" data-reactid="121"><span data-reactid="122"><!-- react-text: 123 -->协作关系<!-- /react-text --></span><a href="#协作关系" class="anchor" data-reactid="124">#</a></h1><p data-reactid="125"><!-- react-text: 126 -->产品与实施项目之间的协作关系：  <!-- /react-text --></p><div style="text-align:center;margin:40px 60px;" data-reactid="127"><img src="https://app-design.github.io/s/gogs-collaboration1.svg" data-reactid="128"/></div><h1 id="Gogs-用户申请" data-reactid="129"><span data-reactid="130"><!-- react-text: 131 -->Gogs 用户申请<!-- /react-text --></span><a href="#Gogs-用户申请" class="anchor" data-reactid="132">#</a></h1><p data-reactid="133"><!-- react-text: 134 -->鉴于目前产品只是在公司内部开源，因此 Gogs 上用户的开通，需要通过公司邮件向以下邮箱 tangyuanzhao@git.com.cn 发送申请，并请注明：<!-- /react-text --></p><ul data-reactid="135"><li data-reactid="136"><p data-reactid="137"><!-- react-text: 138 -->申请人姓名<!-- /react-text --></p></li><li data-reactid="139"><p data-reactid="140"><!-- react-text: 141 -->公司邮箱<!-- /react-text --></p></li><li data-reactid="142"><p data-reactid="143"><!-- react-text: 144 -->所在部门<!-- /react-text --></p></li><li data-reactid="145"><p data-reactid="146"><!-- react-text: 147 -->联系电话<!-- /react-text --></p></li><li data-reactid="148"><p data-reactid="149"><!-- react-text: 150 -->可能使用的项目（如有）<!-- /react-text --></p></li></ul></section><section class="markdown api-container" data-reactid="151"></section></article></div><div class="ant-col-3 ant-col-offset-1" data-reactid="152"><div data-reactid="153"><div class="" data-reactid="154"><div class="ant-anchor-wrapper toc-anchor" data-reactid="155"><div class="ant-anchor" data-reactid="156"><div class="ant-anchor-ink" data-reactid="157"><span class="ant-anchor-ink-ball animated" data-reactid="158"></span></div><div class="ant-anchor-link" data-reactid="159"><a class="ant-anchor-link-title" href="#介绍" title="介绍" data-reactid="160">介绍</a></div><div class="ant-anchor-link" data-reactid="161"><a class="ant-anchor-link-title" href="#分支管理规范" title="分支管理规范" data-reactid="162">分支管理规范</a></div><div class="ant-anchor-link" data-reactid="163"><a class="ant-anchor-link-title" href="#协作关系" title="协作关系" data-reactid="164">协作关系</a></div><div class="ant-anchor-link" data-reactid="165"><a class="ant-anchor-link-title" href="#Gogs-用户申请" title="Gogs 用户申请" data-reactid="166">Gogs 用户申请</a></div></div></div></div></div></div></div></div></div><div class="ant-row" data-reactid="167"><div class="ant-col-xs-24 ant-col-sm-24 ant-col-md-18 ant-col-md-offset-6 ant-col-lg-20 ant-col-lg-offset-4" data-reactid="168"><section class="prev-next-nav" data-reactid="169"><a class="next-page" href="/docs/contribution/01-product" data-reactid="170">Product Collaboration</a></section></div></div></div><footer id="footer" data-reactid="171"><ul data-reactid="172"><li data-reactid="173"><h2 data-reactid="174"><i class="anticon anticon-github" data-reactid="175"></i><!-- react-text: 176 --> 高伟达Git私服<!-- /react-text --></h2><div data-reactid="177"><a target="_blank " href="http://27.154.58.94:32445/xiamen-lab/app-design" data-reactid="178"><span data-reactid="179">Repository</span></a></div><div data-reactid="180"><a target="_blank " href="mailto:tangyuanzhao@git.com.cn?subject=申请注册git私服用户&amp;body=姓名：%0D%0A部门：%0D%0A电话：%0D%0A" data-reactid="181"><span data-reactid="182">Apply for registered git users</span></a></div></li><li data-reactid="183"><h2 data-reactid="184"><i class="anticon anticon-link" data-reactid="185"></i><!-- react-text: 186 --> <!-- /react-text --><span data-reactid="187">Links</span></h2><div data-reactid="188"><a href="http://www.git.com.cn/" data-reactid="189"><span data-reactid="190">Ant Financial Design Platform</span></a></div></li><li data-reactid="191"><h2 data-reactid="192"><i class="anticon anticon-customer-service" data-reactid="193"></i><!-- react-text: 194 --> <!-- /react-text --><span data-reactid="195">Community</span></h2><div data-reactid="196"><a href="/changelog-cn" data-reactid="197"><span data-reactid="198">Change Log</span></a></div><div data-reactid="199"><a target="_blank" rel="noopener noreferrer" href="http://27.154.58.94:32445/xiamen-lab/app-design/wiki/FAQ" data-reactid="200"><span data-reactid="201">FAQ</span></a></div><div data-reactid="202"><a target="_blank" rel="noopener noreferrer" href="https://gitter.im/app-design/app-design" data-reactid="203"><span data-reactid="204">Chat Room (中文)</span></a></div><div data-reactid="205"><a target="_blank" rel="noopener noreferrer" href="http://27.154.58.94:32445/xiamen-lab/app-design/issues/new/" data-reactid="206"><span data-reactid="207">Bug Report</span></a></div><div data-reactid="208"><a target="_blank" rel="noopener noreferrer" href="http://27.154.58.94:32445/xiamen-lab/app-design/issues" data-reactid="209"><span data-reactid="210">Issues</span></a></div><div data-reactid="211"><a target="_blank" rel="noopener noreferrer" href="http://stackoverflow.com/questions/tagged/appdesign" data-reactid="212"><span data-reactid="213">StackOverflow</span></a></div><div data-reactid="214"><a target="_blank" rel="noopener noreferrer" href="https://segmentfault.com/t/appdesign" data-reactid="215"><span data-reactid="216">SegmentFault</span></a></div></li><li data-reactid="217"><h2 data-reactid="218"><!-- react-text: 219 -->Copyright © <!-- /react-text --><!-- react-text: 220 -->2017<!-- /react-text --></h2><div data-reactid="221"><span data-reactid="222">Created by AIUX</span></div></li></ul></footer></div>
+    </div>
+    <script src="/common.js"></script>
+    <script src="/index.js"></script>
+  </body>
+</html>
